@@ -3,7 +3,7 @@ services:
     image: postgres
     container_name: test-postgres
     ports:
-      - '5432:5432'
+      - '5433:5432'
     environment:
       POSTGRES_DB: test
       POSTGRES_USER: USER
@@ -17,7 +17,7 @@ services:
     environment:
       DB_USERNAME: USER
       DB_PASSWORD: PASS
-      DB_URL: jdbc:postgresql://host.docker.internal:5432/test
+      DB_URL: jdbc:postgresql://host.docker.internal:5433/test
     depends_on:
       - postgres
 volumes:
