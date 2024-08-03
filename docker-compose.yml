@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres
+    container_name: test-postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: USER
+      POSTGRES_PASSWORD: PASS
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  app:
+    image: test-api
+    ports:
+      - '8080:8080'
+    environment:
+      DB_USERNAME: USER
+      DB_PASSWORD: PASS
+      DB_URL: jdbc:postgresql://host.docker.internal:5432/test
+    depends_on:
+      - postgres
+volumes:
+  postgres_data:
