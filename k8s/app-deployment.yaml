@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-api
+  template:
+    metadata:
+      labels:
+        app: test-api
+    spec:
+      containers:
+        - name: test-api
+          image: reluckyyy/test-api
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_USERNAME
+              value: "USER"
+            - name: DB_PASSWORD
+              value: "PASS"
+            - name: DB_URL
+              value: "jdbc:postgresql://test-postgres:5432/test"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-api
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: test-api
